@@ -1,0 +1,50 @@
+.entry {
+  .entryContainer {
+    margin-top: 50px;
+
+    .titleBox {
+      display: flex;
+      align-items: center;
+      justify-content: right;
+      gap: 10px;
+
+      .title {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 26px;
+      }
+
+      .delete {
+        img {
+          height: 30px;
+          width: 30px;
+        }
+      }
+    }
+
+    .description {
+      .content {
+        font-size: 18px;
+        line-height: 26px;
+        text-align: justify;
+      }
+
+      .imageBox {
+        overflow: hidden;
+        border-radius: 6px;
+        height: 250px;
+        width: 400px;
+        position: relative;
+        float: left;
+        margin-right: 25px;
+        margin-bottom: 10px;
+
+        img {
+          object-fit: cover;
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+  }
+}

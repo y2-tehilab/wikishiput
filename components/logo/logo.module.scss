@@ -1,0 +1,19 @@
+.logo {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  cursor: pointer;
+  align-items: center;
+
+  .logoText {
+    padding-top: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    color: $white;
+  }
+
+  img {
+    height: 50px;
+    width: 50px;
+  }
+}

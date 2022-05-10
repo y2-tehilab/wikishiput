@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "clinyong.vscode-css-modules",
+    "dbaeumer.vscode-eslint",
+    "syler.sass-indented"
+  ]
+}

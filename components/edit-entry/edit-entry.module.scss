@@ -1,0 +1,55 @@
+.editEntry {
+  .description {
+    margin-top: 35px;
+    display: flex;
+    gap: 25px;
+
+    .content {
+      width: calc(100% - 425px);
+      height: 370px;
+    }
+
+    .imageBox {
+      .fileSelect {
+        overflow: hidden;
+        border-radius: 6px;
+        height: 300px;
+        width: 450px;
+        background: #fcfcfc;
+        border: 1px solid #dadada;
+        cursor: pointer;
+        display: block;
+
+        .fileUploadInput {
+          display: none;
+        }
+
+        .uploadText {
+          margin: 10px;
+          display: block;
+          font-size: 18px;
+          color: #757575;
+        }
+
+        img {
+          object-fit: cover;
+          height: 100%;
+          width: 100%;
+        }
+      }
+
+      .saveButton {
+        height: 50px;
+        background: $main_color;
+        border-radius: 7px;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 26px;
+        color: $white;
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+      }
+    }
+  }
+}

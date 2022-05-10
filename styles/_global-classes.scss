@@ -1,0 +1,19 @@
+.container {
+  overflow: auto;
+  width: 1206px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+.input {
+  height: 46px;
+  background: #fcfcfc;
+  border: 1px solid #dadada;
+  box-sizing: border-box;
+  border-radius: 7px;
+  width: 100%;
+  font-size: 18px;
+  padding: 10px;
+  color: #363636;
+}

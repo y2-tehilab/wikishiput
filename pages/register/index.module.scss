@@ -1,0 +1,64 @@
+.register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+
+  .logo {
+    width: max-content;
+
+    span {
+      color: $black;
+    }
+  }
+
+  .registerContainer {
+    margin-top: 50px;
+    background: $white;
+    box-shadow: 0px 4px 20px 1px rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
+    padding: 30px;
+    width: 450px;
+
+    .title {
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 26px;
+      margin: 0;
+    }
+
+    .label {
+      font-size: 18px;
+      line-height: 26px;
+      margin-top: 25px;
+      display: block;
+    }
+
+    .input {
+      margin-top: 5px;
+    }
+
+    .registerButton {
+      height: 50px;
+      background: $main_color;
+      border-radius: 7px;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 26px;
+      color: $white;
+      width: 100%;
+      text-align: center;
+      margin-top: 55px;
+    }
+
+    .loginLink {
+      text-align: center;
+      text-decoration: underline;
+      font-size: 16px;
+      line-height: 26px;
+      display: block;
+      padding-top: 10px;
+    }
+  }
+}

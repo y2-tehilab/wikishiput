@@ -1,0 +1,40 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  line-height: 16px;
+  font-family: $main_font;
+  color: $black;
+  direction: rtl;
+  height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+
+  span,
+  input,
+  textarea,
+  select,
+  button {
+    font-family: $main_font;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  a,
+  button {
+    all: unset;
+    border: none;
+    color: $black;
+    cursor: pointer;
+  }
+}
+
+html {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
