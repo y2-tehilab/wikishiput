@@ -1,12 +1,17 @@
-import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import styles from './search-input.module.scss';
 
-export default function SearchInput({ options, isBig }) {
-  const [sortedOptions, setSortedOptions] = useState(options);
+export default function SearchInput({ options, isBig, searchClicked }) {
+  const [sortedOptions, setSortedOptions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState(0);
   const [searchText, setSearchText] = useState('');
+  const router = useRouter();
+
+  useEffect(() => {
+    setSortedOptions(options);
+  }, [options]);
 
   const sortOptions = (newSearchText) => {
     setSearchText(newSearchText);
@@ -19,25 +24,21 @@ export default function SearchInput({ options, isBig }) {
     }
   };
 
-  const toggleFocus = () => {
-    setIsOpen(!isOpen);
-    if (isOpen) setSortedOptions(options);
-  };
-
   const selectOption = (newValue) => {
     setValue(newValue);
+    router.push(`/entry?id=${newValue}`);
     if (newValue !== value) {
       setSearchText(
         options?.find((option) => option.value == newValue)?.text || ''
       );
-      toggleFocus();
+      setIsOpen(false);
     }
   };
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      console.log('search', searchText);
-      toggleFocus();
+      searchClicked?.(searchText);
+      setIsOpen(false);
     }
   };
 
@@ -53,33 +54,28 @@ export default function SearchInput({ options, isBig }) {
         isBig ? styles.big : styles.small
       }`}
     >
-      <button
-        className={`${styles.searchBox} ${isOpen ? styles.open : ''}`}
-        onClick={toggleFocus}
-        onKeyDown={handleKeyDownButton}
-      >
-        <input
-          className={styles.searchInput}
-          type="text"
-          placeholder="חפש שופט"
-          value={searchText}
-          onChange={(event) => sortOptions(event.target.value)}
-          onKeyDown={handleKeyDown}
-        />
-      </button>
+      <input
+        className={`${styles.searchInput} ${isOpen ? styles.open : ''}`}
+        type="text"
+        placeholder="חפש שופט"
+        value={searchText}
+        onChange={(event) => sortOptions(event.target.value)}
+        onKeyDown={handleKeyDown}
+        onFocus={() => setIsOpen(true)}
+        onBlur={() => setIsOpen(false)}
+        // onBlur={blu}
+      />
       {isOpen && (
-        <ul className={styles.options}>
+        <ul className={styles.options} >
           {sortedOptions.map((option) => (
             <li
-              key={`option_${option.value}`}
+              key={`option-${option.value}`}
               className={`${styles.option} ${
                 value === option.value ? styles.selected : ''
               }`}
-              onClick={() => selectOption(option.value)}
+              onMouseDown={() => selectOption(option.value)}
             >
-              <Link href={`/entry?id=${option.value}`} passHref>
                 {option.text}
-              </Link>
             </li>
           ))}
         </ul>

@@ -2,30 +2,8 @@ import Logo from '../logo/logo';
 import SearchInput from '../search-input/search-input';
 import styles from './header.module.scss';
 
-
-export default function Header() {
-  const options = [
-    {
-      value: 1,
-      text: 'שופט1',
-    },
-    {
-      value: 2,
-      text: 'שופט12',
-    },
-    {
-      value: 3,
-      text: 'שופט3',
-    },
-    {
-      value: 4,
-      text: 'שופט4',
-    },
-    {
-      value: 5,
-      text: 'שופט5',
-    },
-  ];
+export default function Header({allEntries}) {
+  const options = allEntries.map(({item1, item2}) => ({text: item2, value: item1}))
 
   return (
     <div className={styles.header}>

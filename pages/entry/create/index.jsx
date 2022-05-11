@@ -1,9 +1,34 @@
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 import EditEntry from '../../../components/edit-entry/edit-entry';
 import Header from '../../../components/header/header';
+import NotificationPopup from '../../../components/notification-popup/notification-popup';
+import { getAllEntries } from '../../../services/api';
 import styles from './index.module.scss';
 
 export default function Create() {
+  const [allEntries, setAllEntries] = useState([]);
+  const [isSuccessMessageVisible, setIsSuccessMessageVisible] = useState(false);
+  let timeOut = null;
+
+  const initEntries = async () => {
+    const allEntriesResponse = await getAllEntries();
+    setAllEntries(allEntriesResponse);
+  };
+
+  useEffect(() => {
+    initEntries();
+  }, []);
+
+  useEffect(() => {
+    if(isSuccessMessageVisible) {
+      timeOut = setTimeout(() => {
+        setIsSuccessMessageVisible(false)
+      }, 3000)
+    }
+    else clearTimeout(timeOut)
+  }, [isSuccessMessageVisible]);
+
   return (
     <div>
       <Head>
@@ -12,10 +37,11 @@ export default function Create() {
         <link rel="icon" href="/images/logo.png" />
       </Head>
       <div className={styles.create}>
-        <Header />
+        <Header allEntries={allEntries} />
         <div className={`container ${styles.createContainer}`}>
-          <EditEntry isNew={true}/>
+          <EditEntry isNew={true} onSuccessSave={() => setIsSuccessMessageVisible(true)}/>
         </div>
+        <NotificationPopup isVisible={isSuccessMessageVisible}>נשמר בהצלחה</NotificationPopup>
       </div>
     </div>
   );

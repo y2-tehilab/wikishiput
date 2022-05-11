@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { useStore } from '../../../store';
 import { observer } from 'mobx-react-lite';
 
-export default observer(function HomeHeader({allEntries}) {
+export default observer(function HomeHeader({allEntries, onSearch}) {
   const store = useStore();
   const { isLoggedIn } = store.auth;
-  const options = allEntries.map((entry, index) => ({text: entry, value: index + 1}))
+  const options = allEntries.map(({item1, item2}) => ({text: item2, value: item1}))
 
   return (
     <div className={styles.homeHeaderWrapper}>
@@ -16,7 +16,7 @@ export default observer(function HomeHeader({allEntries}) {
       <Link href={isLoggedIn ? '/entry/create' : '/login'}>
         <a className={styles.link}>{isLoggedIn ? 'יצירת ערך' : 'התחברות'}</a>
       </Link> 
-      <SearchInput options={options} isBig={true} />
+      <SearchInput options={options} isBig={true} searchClicked={onSearch}/>
     </div>
   );
 })

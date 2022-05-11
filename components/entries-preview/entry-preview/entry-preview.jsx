@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import styles from './top-entry.module.scss';
+import styles from './entry-preview.module.scss';
 
-export default function TopEntry({ id, headline, content, entryFiles }) {
+export default function EntryPreview({ id, headline, content, entryFiles }) {
   return (
     <Link href={`/entry?id=${id}`} passHref>
-      <div className={styles.topEntry}>
+      <div className={styles.entryPreview}>
         <div className={styles.imageBox}>
           <img src="/images/person.png" alt="person image" />
         </div>

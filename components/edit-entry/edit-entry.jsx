@@ -3,7 +3,7 @@ import { createEntry } from '../../services/api/entries';
 import { uploadFile } from '../../services/api/files';
 import styles from './edit-entry.module.scss';
 
-export default function EditEntry({ isNew, entry }) {
+export default function EditEntry({ isNew, entry, onSuccessSave }) {
   const [title, setTitle] = useState(entry?.headline || 'headline');
   const [content, setContent] = useState(entry?.content || 'content');
   const [image, setImage] = useState('');
@@ -20,12 +20,19 @@ export default function EditEntry({ isNew, entry }) {
 
   const save = async () => {
     try {
-      const file = await uploadFile(image)
-      const entry = await createEntry({
-        headline: title,
-        content,
-        entryFiles: [{fileId: file.id}],
-      });
+      if(isNew) {
+        const file = await uploadFile(image)
+        await createEntry({
+          headline: title,
+          content,
+          entryFiles: [{fileId: file.id}],
+        });    
+        onSuccessSave();  
+        setContent('');  
+        setImage('');  
+        setImagePath('');  
+        setTitle('');  
+      }
     } catch (e) {}
   };
 

@@ -1,5 +1,15 @@
 .home {
-  .topEntriesContainer {
-    margin-top: 100px;
+  .entriesSearchResultsBox {
+    margin-top: 80px;
+
+    .noResultsText {
+      font-size: 20px;
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+
+  .topEntriesBox {
+    margin-top: 80px;
   }
 }

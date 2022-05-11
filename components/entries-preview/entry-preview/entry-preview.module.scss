@@ -1,4 +1,4 @@
-.topEntry {
+.entryPreview {
   border: 1px solid $grey_border;
   border-radius: 6px;
   background-color: $white;
@@ -10,6 +10,8 @@
   cursor: pointer;
 
   .description {
+    width: calc(100% - 95px);
+
     .headline {
       font-size: 20px;
       font-weight: 500;
@@ -20,6 +22,9 @@
     .content {
       font-size: 16px;
       margin: unset;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
   }
 

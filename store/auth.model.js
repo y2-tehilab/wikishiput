@@ -54,8 +54,6 @@ export class AuthModel {
   }
 
   async login(email, password) {
-    console.log(email, password);
-
     const user = await login({ email, password });
     this.userAuthenticateSucceed(user);
   }
@@ -67,13 +65,7 @@ export class AuthModel {
 
   userAuthenticateSucceed(user) {
     setAuthToken(user.token);
-
-    Cookies.set('token', user.token, {
-      expires: 7,
-      sameSite: 'none',
-      secure: true,
-    });
-
+    Cookies.set('token', user.token);
     this.setUser(user);
   }
 }
