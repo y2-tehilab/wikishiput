@@ -1,13 +1,22 @@
 import { useState } from 'react';
 import { createEntry } from '../../services/api/entries';
 import { uploadFile } from '../../services/api/files';
+import ButtonLoader from '../button-loader/button-loader';
 import styles from './edit-entry.module.scss';
 
-export default function EditEntry({ isNew, entry, onSuccessSave }) {
+export default function EditEntry({ isNew, entry, onSave }) {
   const [title, setTitle] = useState(entry?.headline || 'headline');
   const [content, setContent] = useState(entry?.content || 'content');
   const [image, setImage] = useState('');
   const [imagePath, setImagePath] = useState(entry?.image || '');
+  const [isRequestInProgress, setIsRequestInProgress] = useState(false);
+
+  const messages = {
+    success: 'נשמר בהצלחה',
+    failed: 'שגיאה בעת שמירת נתונים',
+    validation: 'הכנס את כל הנתונים',
+    existValue: 'הערך כבר קיים במערכת',
+  }
 
   const changeImage = (newImage) => {
     if (newImage) {
@@ -20,20 +29,33 @@ export default function EditEntry({ isNew, entry, onSuccessSave }) {
 
   const save = async () => {
     try {
-      if(isNew) {
-        const file = await uploadFile(image)
-        await createEntry({
-          headline: title,
-          content,
-          entryFiles: [{fileId: file.id}],
-        });    
-        onSuccessSave();  
-        setContent('');  
-        setImage('');  
-        setImagePath('');  
-        setTitle('');  
+      if (!title || !content || !image) {
+        onSave(messages.validation)
+      } else {
+        if (isNew) {
+          setIsRequestInProgress(true);
+          const file = await uploadFile(image);
+          await createEntry({
+            headline: title,
+            content,
+            entryFiles: [{ fileId: file.id }],
+          });
+          onSave(messages.success);
+          setContent('');
+          setImage('');
+          setImagePath('');
+          setTitle('');
+        }        
       }
-    } catch (e) {}
+
+    } catch (e) {
+      if(e.response?.data?.message === 'Entry already exists')
+        onSave(messages.existValue);
+      else onSave(messages.failed);
+    }
+    finally {
+      setIsRequestInProgress(false);
+    }
   };
 
   return (
@@ -67,9 +89,11 @@ export default function EditEntry({ isNew, entry, onSuccessSave }) {
               onChange={(e) => changeImage(e.target.files[0])}
             />
           </label>
-          <button className={styles.saveButton} onClick={save}>
-            שמירה
-          </button>
+          <ButtonLoader
+            text="שמירה"
+            onClick={save}
+            isLoading={isRequestInProgress}
+          />
         </div>
       </div>
     </div>

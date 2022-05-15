@@ -4,20 +4,24 @@ import Logo from '../../components/logo/logo';
 import styles from './index.module.scss';
 import { useStore } from '../../store';
 import Link from 'next/link';
+import ButtonLoader from '../../components/button-loader/button-loader';
 
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isRequestInProgress, setIsRequestInProgress] = useState(false);
   const store = useStore();
 
   const register = async () => {
     try {
+      setIsRequestInProgress(true);
       await store.auth.register(email, name, password, confirmPassword);
       router.push('/');
-    } catch (e) {
-
+    } catch (e) {}
+    finally {
+      setIsRequestInProgress(false);
     }
   };
 
@@ -78,9 +82,7 @@ export default function Register() {
             placeholder="הקלד סיסמה"
             onChange={(event) => setConfirmPassword(event.target.value)}
           />
-          <button onClick={register} className={styles.registerButton}>
-            הרשמה
-          </button>
+          <ButtonLoader text='הרשמה' onClick={register} isLoading={isRequestInProgress}/>
           <Link href="/login">
             <a className={styles.loginLink}>להתחברות</a>
           </Link>

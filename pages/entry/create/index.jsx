@@ -9,12 +9,18 @@ import styles from './index.module.scss';
 export default function Create() {
   const [allEntries, setAllEntries] = useState([]);
   const [isSuccessMessageVisible, setIsSuccessMessageVisible] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
   let timeOut = null;
 
   const initEntries = async () => {
     const allEntriesResponse = await getAllEntries();
     setAllEntries(allEntriesResponse);
   };
+
+  const setMessage = (message) => {
+    setNotificationMessage(message);
+    setIsSuccessMessageVisible(true);
+  }
 
   useEffect(() => {
     initEntries();
@@ -39,9 +45,9 @@ export default function Create() {
       <div className={styles.create}>
         <Header allEntries={allEntries} />
         <div className={`container ${styles.createContainer}`}>
-          <EditEntry isNew={true} onSuccessSave={() => setIsSuccessMessageVisible(true)}/>
+          <EditEntry isNew={true} onSave={setMessage}/>
         </div>
-        <NotificationPopup isVisible={isSuccessMessageVisible}>נשמר בהצלחה</NotificationPopup>
+        <NotificationPopup isVisible={isSuccessMessageVisible}>{notificationMessage}</NotificationPopup>
       </div>
     </div>
   );

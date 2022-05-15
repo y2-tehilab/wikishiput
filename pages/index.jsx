@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import EntriesPreview from '../components/entries-preview/entries-preview';
-import HomeHeader from '../features/home/home-header/home-header';
+import HomeHeader from '../components/home-header/home-header';
 import { getAllEntries, getTopEntries } from '../services/api';
 import styles from './index.module.scss';
 

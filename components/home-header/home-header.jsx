@@ -1,8 +1,8 @@
-import SearchInput from '../../../components/search-input/search-input';
-import Logo from '../../../components/logo/logo';
+import SearchInput from '../search-input/search-input';
+import Logo from '../logo/logo';
 import styles from './home-header.module.scss';
 import Link from 'next/link';
-import { useStore } from '../../../store';
+import { useStore } from '../../store';
 import { observer } from 'mobx-react-lite';
 
 export default observer(function HomeHeader({allEntries, onSearch}) {

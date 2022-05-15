@@ -4,6 +4,7 @@
   align-items: center;
   flex-direction: column;
   height: 100vh;
+  background: #f0eeee;
 
   .logo {
     width: max-content;
@@ -37,19 +38,10 @@
 
     .input {
       margin-top: 5px;
-    }
 
-    .registerButton {
-      height: 50px;
-      background: $main_color;
-      border-radius: 7px;
-      font-weight: 500;
-      font-size: 20px;
-      line-height: 26px;
-      color: $white;
-      width: 100%;
-      text-align: center;
-      margin-top: 55px;
+      &:last-of-type {
+        margin-bottom: 55px;
+      }
     }
 
     .loginLink {

@@ -64,7 +64,7 @@ export default observer(function Entry() {
             </div>
             <div className={styles.description}>
               <div className={styles.imageBox}>
-                <img src="/images/person.png" alt="person image" />
+                <img src={`http://${entry.entryFiles?.[0]?.imageUri}`} alt="person image" />
               </div>
               <p className={styles.content}>{entry.content}</p>
             </div>
