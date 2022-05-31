@@ -5,8 +5,8 @@ import ButtonLoader from '../button-loader/button-loader';
 import styles from './edit-entry.module.scss';
 
 export default function EditEntry({ isNew, entry, onSave }) {
-  const [title, setTitle] = useState(entry?.headline || 'headline');
-  const [content, setContent] = useState(entry?.content || 'content');
+  const [title, setTitle] = useState(entry?.headline || '');
+  const [content, setContent] = useState(entry?.content || '');
   const [image, setImage] = useState('');
   const [imagePath, setImagePath] = useState(entry?.image || '');
   const [isRequestInProgress, setIsRequestInProgress] = useState(false);
@@ -63,7 +63,7 @@ export default function EditEntry({ isNew, entry, onSave }) {
       <input
         type="text"
         className={`${styles.title} input`}
-        placeholder="הכנס כותרת"
+        placeholder="הכנס שם ערך"
         value={title}
         onChange={(event) => setTitle(event.target.value)}
       />

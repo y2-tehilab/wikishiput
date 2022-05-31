@@ -1,19 +1,28 @@
 .container {
-  overflow: auto;
-  width: 1206px;
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0 30px;
+  // overflow: auto;
+  // width: 1206px;
+  // max-width: 100%;
+  // margin: 0 auto;
+  // padding: 0 30px;
 }
 
 .input {
-  height: 46px;
-  background: #fcfcfc;
-  border: 1px solid #dadada;
+  // height: 46px;
+  // background: #fcfcfc;
+  // border: 1px solid #dadada;
+  // box-sizing: border-box;
+  // border-radius: 7px;
+  // width: 100%;
+  // font-size: 18px;
+  // padding: 10px;
+  // color: #363636;
+  color: #000000;
   box-sizing: border-box;
-  border-radius: 7px;
+  display: block;
   width: 100%;
-  font-size: 18px;
-  padding: 10px;
-  color: #363636;
+  border: 1px solid #72777d;
+  border-radius: 2px;
+  padding: 6px 8px;
+  line-height: 1.28571429em;
+  font-size: 14px;
 }

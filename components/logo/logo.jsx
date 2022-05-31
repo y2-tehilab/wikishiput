@@ -6,7 +6,10 @@ export default function Logo() {
     <Link href="/" passHref>
       <div className={styles.logo}>
         <img src="/images/logo.png" alt="logo wiki shiput" />
-        <span className={styles.logoText}>ויקי-שיפוט</span>
+        <div className={styles.textBox}>
+          <span className={styles.logoText}>ויקישיפוט</span>
+          <span className={styles.subText}>האינציקלופדיה לשופטים</span>
+        </div>
       </div>
     </Link>
   );

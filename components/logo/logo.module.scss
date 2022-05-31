@@ -1,19 +1,27 @@
 .logo {
   display: flex;
-  flex-direction: column;
   width: max-content;
   cursor: pointer;
   align-items: center;
 
-  .logoText {
-    padding-top: 8px;
-    font-size: 18px;
-    font-weight: 500;
-    color: $white;
+  .textBox {
+    .logoText {
+      font-size: 24px;
+      font-weight: 500;
+      display: block;
+      padding-bottom: 8px;
+      line-height: 20px;
+    }
+
+    .subText {
+      display: block;
+      font-size: 12px;
+    }
   }
 
   img {
     height: 50px;
     width: 50px;
+    margin-left: 10px;
   }
 }

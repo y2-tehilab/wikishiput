@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styles from './search-input.module.scss';
 
-export default function SearchInput({ options, isBig, searchClicked }) {
+export default function SearchInput({ options, isBig, searchClicked}) {
   const [sortedOptions, setSortedOptions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValue] = useState(0);
@@ -35,18 +35,19 @@ export default function SearchInput({ options, isBig, searchClicked }) {
     }
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      searchClicked?.(searchText);
-      setIsOpen(false);
+  const search = () => {
+    if(searchClicked)
+      searchClicked(searchText)
+    else {
+      router.push(`/search?search=${searchText}`);
     }
-  };
-
-  const handleKeyDownButton = (event) => {
-    if (event.keyCode === 32) {
-      event.preventDefault();
-    }
-  };
+  }
+  // const handleKeyDown = (event) => {
+  //   if (event.key === 'Enter') {
+  //     searchClicked?.(searchText);
+  //     setIsOpen(false);
+  //   }
+  // };
 
   return (
     <div
@@ -54,19 +55,24 @@ export default function SearchInput({ options, isBig, searchClicked }) {
         isBig ? styles.big : styles.small
       }`}
     >
-      <input
-        className={`${styles.searchInput} ${isOpen ? styles.open : ''}`}
-        type="text"
-        placeholder="חפש שופט"
-        value={searchText}
-        onChange={(event) => sortOptions(event.target.value)}
-        onKeyDown={handleKeyDown}
-        onFocus={() => setIsOpen(true)}
-        onBlur={() => setIsOpen(false)}
-        // onBlur={blu}
-      />
+      <div className={styles.searchBox}>
+        <input
+          className={`${styles.searchInput} ${isOpen ? styles.open : ''}`}
+          type="text"
+          placeholder="חפש שופט"
+          value={searchText}
+          onChange={(event) => sortOptions(event.target.value)}
+          onFocus={() => setIsOpen(true)}
+          onBlur={() => setIsOpen(false)}
+        />
+        <button
+          className={`${styles.searchButton} ${isOpen && styles.visible}`}
+          onMouseDown={search}>
+          חיפוש
+        </button>
+      </div>
       {isOpen && (
-        <ul className={styles.options} >
+        <ul className={styles.options}>
           {sortedOptions.map((option) => (
             <li
               key={`option-${option.value}`}
@@ -75,9 +81,21 @@ export default function SearchInput({ options, isBig, searchClicked }) {
               }`}
               onMouseDown={() => selectOption(option.value)}
             >
-                {option.text}
+              {option.text}
             </li>
           ))}
+          {
+            searchText && (
+              <li
+              key={`option-pages`}
+              className={`${styles.option} ${styles.pageOption}`}
+              onMouseDown={search}
+            >
+              חיפוש דפים שמכילים
+              <strong> {searchText}</strong>
+            </li>
+            )
+          }
         </ul>
       )}
     </div>

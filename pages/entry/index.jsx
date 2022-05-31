@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import Header from '../../components/header/header';
-import { getEntry, deleteEntry, getAllEntries } from '../../services/api';
+import { getEntry, deleteEntry } from '../../services/api';
 import styles from './index.module.scss';
 import { useRouter } from 'next/router';
 import { useStore } from '../../store';
@@ -10,28 +10,18 @@ import PageLoader from '../../components/page-loader/page-loader';
 
 export default observer(function Entry() {
   const [entry, setEntry] = useState(null);
-  const [allEntries, setAllEntries] = useState([]);
   const router = useRouter();
   const store = useStore();
   const { isLoggedIn } = store.auth;
 
-  const initEntries = async () => {
-    const allEntriesResponse = await getAllEntries();
-    setAllEntries(allEntriesResponse);
-  };
-
-  useEffect(() => {
-    initEntries();
-  }, []);
-
-  const getEntryComp = async () => {
-    const entryAwait = await getEntry(router.query.id);
-    setEntry(entryAwait);
+  const getEntryByQuery = async () => {
+    const entryByQuery = await getEntry(router.query.id);
+    setEntry(entryByQuery);
   };
 
   useEffect(() => {
     if (!router.isReady) return;
-    getEntryComp();
+    getEntryByQuery();
   }, [router.isReady, router.query.id]);
 
   const deleteCurrent = async () => {
@@ -49,7 +39,7 @@ export default observer(function Entry() {
         <link rel="icon" href="/images/logo.png" />
       </Head>
       <div className={styles.entry}>
-        <Header allEntries={allEntries} />
+        <Header />
         {!entry ? (
           <PageLoader />
         ) : (

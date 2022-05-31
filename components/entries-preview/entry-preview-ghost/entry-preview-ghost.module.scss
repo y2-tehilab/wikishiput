@@ -1,12 +1,9 @@
 .entryPreviewGhost {
-  border: 1px solid $grey_border;
-  border-radius: 6px;
-  background-color: $white;
-  padding: 10px;
-  margin-bottom: 20px;
   display: flex;
   gap: 15px;
   align-items: center;
+  text-decoration: none;
+  margin-bottom: 20px;
 
   .descriptionGhost {
     width: calc(100% - 95px);

@@ -1,33 +1,41 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import EntriesPreview from '../components/entries-preview/entries-preview';
-import Header from '../components/header/header';
-import { getAllEntries, getTopEntries } from '../services/api';
+import { getAllEntries } from '../../services/api';
+import EntriesPreview from '../../components/entries-preview/entries-preview';
+import Header from '../../components/header/header';
 import styles from './index.module.scss';
 
-export default function Home() {
-  const [topEntries, setTopEntries] = useState('loading');
-  const [allEntries, setAllEntries] = useState([]);
+export default function Search() {
   const [entriesSearchResults, setEntriesSearchResults] = useState([]);
   const [searchText, setSearchText] = useState('');
+  const [allEntries, setAllEntries] = useState([]);
+  const router = useRouter();
 
   const initEntries = async () => {
-    const topEntriesResponse = await getTopEntries();
-    setTopEntries(topEntriesResponse);
     const entries = await getAllEntries();
     setAllEntries(entries);
-  };
+  }
 
-  const onSearch = (search) => {
-    setSearchText(search);
+  const onSearch = (text) => {
+    setSearchText(text);
     setEntriesSearchResults(
-      allEntries.filter((entry) => entry?.item2?.includes(search))
+      allEntries.filter((entry) => entry?.item2?.includes(text))
     );
   };
 
   useEffect(() => {
     initEntries();
   }, []);
+
+  useEffect(()=>{
+    if(router.isReady && allEntries?.length) {
+      setSearchText(router.query.search);
+      setEntriesSearchResults(
+        allEntries.filter((entry) => entry?.item2?.includes(router.query.search))
+      );
+    }
+}, [router.isReady, allEntries, router.query.search]);
 
   return (
     <div>
@@ -37,7 +45,7 @@ export default function Home() {
         <link rel="icon" href="/images/logo.png" />
       </Head>
 
-      <div className={styles.home}>
+      <div className={styles.search}>
         <Header onSearch={onSearch} entries={allEntries}/>
         <div className="container">
           {searchText && (
@@ -56,13 +64,6 @@ export default function Home() {
               )}
             </div>
           )}
-          <div className={styles.topEntriesBox}>
-            <EntriesPreview
-              entries={topEntries}
-              isLoading={topEntries === 'loading'}
-              title="חיפושים אחרונים"
-            />
-          </div>
         </div>
       </div>
     </div>
