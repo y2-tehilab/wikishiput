@@ -8,7 +8,7 @@ export default function EntriesPreview({ entries, isLoading, title, isSmall }) {
     <div className={styles.entriesPreview}>
       <strong className={styles.title}>{title}</strong>
       {isLoading
-        ? Array.from({ length: 10 }, (_, i) => i + 1).map((index) => (
+        ? Array.from({ length: 10 }, (_, index) => index + 1).map((index) => (
             <EntryPreviewGhost key={`entry-preview-ghost-${index}`} />
           ))
         : entries.map((entry) =>

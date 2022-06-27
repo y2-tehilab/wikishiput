@@ -6,7 +6,7 @@ export default function EntryPreview({ id, headline, content, entryFiles }) {
     <Link href={`/entry?id=${id}`} passHref>
       <a className={styles.entryPreview}>
         <div className={styles.imageBox}>
-        <img src={`http://${entryFiles?.[0]?.imageUri}`} alt="person image" />
+          <img src={`http://${entryFiles?.[0]?.imageUri}`} alt="person image" />
         </div>
 
         <div className={styles.description}>

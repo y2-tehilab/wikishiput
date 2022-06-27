@@ -1,7 +1,5 @@
 import React, { createContext, useContext } from 'react';
-
 import { RootModel } from './root.model';
-import * as mobx from 'mobx';
 
 const Index = createContext(null);
 

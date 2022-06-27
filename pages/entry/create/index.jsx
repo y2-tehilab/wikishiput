@@ -20,19 +20,19 @@ export default function Create() {
   const setMessage = (message) => {
     setNotificationMessage(message);
     setIsSuccessMessageVisible(true);
-  }
+  };
 
   useEffect(() => {
     initEntries();
   }, []);
 
   useEffect(() => {
-    if(isSuccessMessageVisible) {
+    if (isSuccessMessageVisible) {
+      const ms = 3000;
       timeOut = setTimeout(() => {
-        setIsSuccessMessageVisible(false)
-      }, 3000)
-    }
-    else clearTimeout(timeOut)
+        setIsSuccessMessageVisible(false);
+      }, ms);
+    } else clearTimeout(timeOut);
   }, [isSuccessMessageVisible]);
 
   return (
@@ -45,9 +45,11 @@ export default function Create() {
       <div className={styles.create}>
         <Header allEntries={allEntries} />
         <div className={`container ${styles.createContainer}`}>
-          <EditEntry isNew={true} onSave={setMessage}/>
+          <EditEntry isNew={true} onSave={setMessage} />
         </div>
-        <NotificationPopup isVisible={isSuccessMessageVisible}>{notificationMessage}</NotificationPopup>
+        <NotificationPopup isVisible={isSuccessMessageVisible}>
+          {notificationMessage}
+        </NotificationPopup>
       </div>
     </div>
   );

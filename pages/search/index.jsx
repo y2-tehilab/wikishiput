@@ -15,7 +15,7 @@ export default function Search() {
   const initEntries = async () => {
     const entries = await getAllEntries();
     setAllEntries(entries);
-  }
+  };
 
   const onSearch = (text) => {
     setSearchText(text);
@@ -28,14 +28,16 @@ export default function Search() {
     initEntries();
   }, []);
 
-  useEffect(()=>{
-    if(router.isReady && allEntries?.length) {
+  useEffect(() => {
+    if (router.isReady && allEntries?.length) {
       setSearchText(router.query.search);
       setEntriesSearchResults(
-        allEntries.filter((entry) => entry?.item2?.includes(router.query.search))
+        allEntries.filter((entry) =>
+          entry?.item2?.includes(router.query.search)
+        )
       );
     }
-}, [router.isReady, allEntries, router.query.search]);
+  }, [router.isReady, allEntries, router.query.search]);
 
   return (
     <div>
@@ -46,7 +48,7 @@ export default function Search() {
       </Head>
 
       <div className={styles.search}>
-        <Header onSearch={onSearch} entries={allEntries}/>
+        <Header onSearch={onSearch} entries={allEntries} />
         <div className="container">
           {searchText && (
             <div className={styles.entriesSearchResultsBox}>

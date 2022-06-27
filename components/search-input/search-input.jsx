@@ -2,10 +2,11 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styles from './search-input.module.scss';
 
-export default function SearchInput({ options, isBig, searchClicked}) {
+export default function SearchInput({ options, isBig, searchClicked }) {
+  const defaultValue = 0;
   const [sortedOptions, setSortedOptions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(defaultValue);
   const [searchText, setSearchText] = useState('');
   const router = useRouter();
 
@@ -29,19 +30,18 @@ export default function SearchInput({ options, isBig, searchClicked}) {
     router.push(`/entry?id=${newValue}`);
     if (newValue !== value) {
       setSearchText(
-        options?.find((option) => option.value == newValue)?.text || ''
+        options?.find((option) => option.value === newValue)?.text || ''
       );
       setIsOpen(false);
     }
   };
 
   const search = () => {
-    if(searchClicked)
-      searchClicked(searchText)
+    if (searchClicked) searchClicked(searchText);
     else {
       router.push(`/search?search=${searchText}`);
     }
-  }
+  };
   // const handleKeyDown = (event) => {
   //   if (event.key === 'Enter') {
   //     searchClicked?.(searchText);
@@ -67,7 +67,8 @@ export default function SearchInput({ options, isBig, searchClicked}) {
         />
         <button
           className={`${styles.searchButton} ${isOpen && styles.visible}`}
-          onMouseDown={search}>
+          onMouseDown={search}
+        >
           חיפוש
         </button>
       </div>
@@ -84,9 +85,8 @@ export default function SearchInput({ options, isBig, searchClicked}) {
               {option.text}
             </li>
           ))}
-          {
-            searchText && (
-              <li
+          {searchText && (
+            <li
               key={`option-pages`}
               className={`${styles.option} ${styles.pageOption}`}
               onMouseDown={search}
@@ -94,8 +94,7 @@ export default function SearchInput({ options, isBig, searchClicked}) {
               חיפוש דפים שמכילים
               <strong> {searchText}</strong>
             </li>
-            )
-          }
+          )}
         </ul>
       )}
     </div>

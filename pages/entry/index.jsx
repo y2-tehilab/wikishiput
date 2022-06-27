@@ -28,7 +28,9 @@ export default observer(function Entry() {
     try {
       await deleteEntry(entry.id);
       router.push('/');
-    } catch {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -54,7 +56,10 @@ export default observer(function Entry() {
             </div>
             <div className={styles.description}>
               <div className={styles.imageBox}>
-                <img src={`http://${entry.entryFiles?.[0]?.imageUri}`} alt="person image" />
+                <img
+                  src={`http://${entry.entryFiles?.[0]?.imageUri}`}
+                  alt="person image"
+                />
               </div>
               <p className={styles.content}>{entry.content}</p>
             </div>

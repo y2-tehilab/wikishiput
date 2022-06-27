@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Head from 'next/head';
 import { useState } from 'react';
 import styles from './index.module.scss';
@@ -5,6 +6,7 @@ import { useStore } from '../../store';
 import Link from 'next/link';
 import ButtonLoader from '../../components/button-loader/button-loader';
 import Header from '../../components/header/header';
+import { useRouter } from 'next/router';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -13,13 +15,15 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isRequestInProgress, setIsRequestInProgress] = useState(false);
   const store = useStore();
+  const router = useRouter();
 
   const register = async () => {
     try {
       setIsRequestInProgress(true);
       await store.auth.register(email, name, password, confirmPassword);
       router.push('/');
-    } catch (e) {
+    } catch (error) {
+      console.log(error);
     } finally {
       setIsRequestInProgress(false);
     }

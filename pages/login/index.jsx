@@ -33,8 +33,8 @@ export default function Login() {
       setIsRequestInProgress(true);
       await store.auth.login(email, password);
       router.push('/');
-    } catch (e) {
-      if (e.response?.data?.message === 'Username or password is incorrect')
+    } catch (error) {
+      if (error.response?.data?.message === 'Username or password is incorrect')
         setMessage(messages.wrongEmailOrPassword);
       else setMessage(messages.failed);
     } finally {
@@ -44,9 +44,10 @@ export default function Login() {
 
   useEffect(() => {
     if (isSuccessMessageVisible) {
+      const ms = 3000;
       timeOut = setTimeout(() => {
         setIsSuccessMessageVisible(false);
-      }, 3000);
+      }, ms);
     } else clearTimeout(timeOut);
   }, [isSuccessMessageVisible]);
 

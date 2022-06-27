@@ -38,7 +38,7 @@ export default function Home() {
       </Head>
 
       <div className={styles.home}>
-        <Header onSearch={onSearch} entries={allEntries}/>
+        <Header onSearch={onSearch} entries={allEntries} />
         <div className="container">
           {searchText && (
             <div className={styles.entriesSearchResultsBox}>
