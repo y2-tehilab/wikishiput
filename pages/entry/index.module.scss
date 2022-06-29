@@ -16,6 +16,16 @@
         width: 100%;
         margin: 0;
         margin-bottom: 15px;
+
+        .editLink {
+          font-size: small;
+          font-weight: normal;
+          padding-right: 10px;
+
+          &:visited {
+            color: #0b0080;
+          }
+        }
       }
 
       .delete {

@@ -31,3 +31,9 @@ export const uploadFile = async (file) => {
 
   return data;
 };
+
+export const deleteFile = async (id) => {
+  const { data } = await filesClient.delete(`?id=${id}`);
+
+  return data;
+};

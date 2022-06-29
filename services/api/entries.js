@@ -38,8 +38,14 @@ export const createEntry = async (entry) => {
   return data;
 };
 
-export const updateEntry = async (id) => {
-  const { data } = await entriesClient.put(`?id=${id}`);
+export const createSection = async (name) => {
+  const { data } = await entriesClient.post('/createSection', { name });
+
+  return data;
+};
+
+export const updateEntry = async (entry) => {
+  const { data } = await entriesClient.put(``, entry);
 
   return data;
 };

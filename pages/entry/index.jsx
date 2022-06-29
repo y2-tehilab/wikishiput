@@ -7,6 +7,8 @@ import { useRouter } from 'next/router';
 import { useStore } from '../../store';
 import { observer } from 'mobx-react-lite';
 import PageLoader from '../../components/page-loader/page-loader';
+import EntryContent from '../../components/entry-content/entry-content';
+import Link from 'next/link';
 
 export default observer(function Entry() {
   const [entry, setEntry] = useState(null);
@@ -47,7 +49,14 @@ export default observer(function Entry() {
         ) : (
           <div className={`container ${styles.entryContainer}`}>
             <div className={styles.titleBox}>
-              <h1 className={styles.title}>{entry.headline}</h1>
+              <h1 className={styles.title}>
+                <span>{entry.headline}</span>
+                {isLoggedIn && (
+                  <Link href={`/entry/edit?id=${entry.id}`}>
+                    <a className={styles.editLink}>[עריכה]</a>
+                  </Link>
+                )}
+              </h1>
               {isLoggedIn && (
                 <button className={styles.delete} onClick={deleteCurrent}>
                   <img src="/images/delete-icon.png" alt="delete image" />
@@ -61,6 +70,7 @@ export default observer(function Entry() {
                   alt="person image"
                 />
               </div>
+              <EntryContent content={entry.entrySections?.[0]?.content} />
               <p className={styles.content}>{entry.content}</p>
             </div>
           </div>

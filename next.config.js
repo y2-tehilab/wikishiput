@@ -4,4 +4,5 @@ const nextConfig = {
   sassOptions: { prependData: `@import './styles/_variables.scss';` },
 };
 
+// eslint-disable-next-line no-undef
 module.exports = nextConfig;
