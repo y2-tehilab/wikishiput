@@ -55,3 +55,27 @@ export const deleteEntry = async (id) => {
 
   return data;
 };
+
+export const getStatisticTypes = async () => {
+  const { data } = await entriesClient.get(`/getStatisticTypes`);
+
+  return data;
+};
+
+export const createStatisticType = async (name) => {
+  const { data } = await entriesClient.post(`/createStatisticType`, { name });
+
+  return data;
+};
+
+export const getRankTypes = async () => {
+  const { data } = await entriesClient.get(`/getRankTypes`);
+
+  return data;
+};
+
+export const createRankType = async (name) => {
+  const { data } = await entriesClient.post(`/createRankType`, { name });
+
+  return data;
+};

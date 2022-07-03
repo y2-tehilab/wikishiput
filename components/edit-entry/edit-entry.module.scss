@@ -13,12 +13,13 @@
     }
 
     .imageBox {
+      width: 320px;
+
       .fileSelect {
         overflow: hidden;
         border: 1px solid #72777d;
         border-radius: 2px;
         height: 225px;
-        width: 300px;
         background: #fcfcfc;
         cursor: pointer;
         display: block;

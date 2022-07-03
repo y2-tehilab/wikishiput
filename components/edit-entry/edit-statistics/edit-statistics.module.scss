@@ -1,0 +1,47 @@
+.editStatistics {
+  border: 1px solid #72777d;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  .addButton {
+    margin-right: 10px;
+  }
+
+  .statistic {
+    margin-bottom: 10px;
+
+    &:first-of-type {
+      margin-top: 15px;
+    }
+
+    .inputBox {
+      display: inline-flex;
+      flex-direction: column;
+      margin-left: 10px;
+      width: calc(50% - 23px);
+
+      label {
+        margin-bottom: 5px;
+      }
+
+      select,
+      input {
+        padding: 1px 2px;
+        height: 21px;
+        font-size: 14px;
+      }
+    }
+    .removeButton {
+      vertical-align: bottom;
+    }
+  }
+
+  .newType {
+    margin-bottom: 5px;
+
+    label {
+      display: block;
+      margin-top: 17px;
+    }
+  }
+}

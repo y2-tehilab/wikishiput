@@ -1,7 +1,13 @@
+/* eslint-disable no-param-reassign */
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import Header from '../../components/header/header';
-import { getEntry, deleteEntry } from '../../services/api';
+import {
+  getEntry,
+  deleteEntry,
+  getRankTypes,
+  getStatisticTypes,
+} from '../../services/api';
 import styles from './index.module.scss';
 import { useRouter } from 'next/router';
 import { useStore } from '../../store';
@@ -9,21 +15,38 @@ import { observer } from 'mobx-react-lite';
 import PageLoader from '../../components/page-loader/page-loader';
 import EntryContent from '../../components/entry-content/entry-content';
 import Link from 'next/link';
+import EntryDetails from '../../components/entry-details/entry-details';
 
 export default observer(function Entry() {
   const [entry, setEntry] = useState(null);
   const router = useRouter();
   const store = useStore();
   const { isLoggedIn } = store.auth;
-
-  const getEntryByQuery = async () => {
-    const entryByQuery = await getEntry(router.query.id);
-    setEntry(entryByQuery);
-  };
+  const [rankTypes, setRankTypes] = useState([]);
+  const [statisticTypes, setStatisticTypes] = useState([]);
 
   useEffect(() => {
+    const initEntry = async () => {
+      const entryByQuery = await getEntry(router.query.id);
+      setEntry(entryByQuery);
+      const rankTypesResponse = await getRankTypes();
+      setRankTypes(
+        rankTypesResponse.reduce((ranks, rank) => {
+          ranks[rank.id] = rank.name;
+          return ranks;
+        }, {})
+      );
+      const statisticTypesResponse = await getStatisticTypes();
+      setStatisticTypes(
+        statisticTypesResponse.reduce((statistics, statistic) => {
+          statistics[statistic.id] = statistic.name;
+          return statistics;
+        }, {})
+      );
+    };
+
     if (!router.isReady) return;
-    getEntryByQuery();
+    initEntry();
   }, [router.isReady, router.query.id]);
 
   const deleteCurrent = async () => {
@@ -64,12 +87,31 @@ export default observer(function Entry() {
               )}
             </div>
             <div className={styles.description}>
-              <div className={styles.imageBox}>
-                <img
-                  src={`http://${entry.entryFiles?.[0]?.imageUri}`}
-                  alt="person image"
-                />
+              <div className={styles.detailsBox}>
+                <div className={styles.imageBox}>
+                  <img
+                    src={`http://${entry.entryFiles?.[0]?.imageUri}`}
+                    alt="person image"
+                  />
+                </div>
+                {!!entry?.entryStatistics?.length && (
+                  <EntryDetails
+                    details={entry.entryStatistics}
+                    title="סטטיסטיקות"
+                    detailsTypes={statisticTypes}
+                    datailName="statisticType"
+                  />
+                )}
+                {!!entry?.entryRanks?.length && (
+                  <EntryDetails
+                    details={entry.entryRanks}
+                    title="ציונים"
+                    detailsTypes={rankTypes}
+                    datailName="rankType"
+                  />
+                )}
               </div>
+
               <EntryContent content={entry.entrySections?.[0]?.content} />
               <p className={styles.content}>{entry.content}</p>
             </div>

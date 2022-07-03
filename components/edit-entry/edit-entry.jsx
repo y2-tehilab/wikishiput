@@ -16,7 +16,11 @@ import {
   isValidEntry,
   changeImage,
   MESSAGES,
+  getDefaultStatistics,
+  getDefaultRanks,
 } from '../../services/entry/edit';
+import EditStatistics from './edit-statistics/edit-statistics';
+import EditRanks from './edit-ranks/edit-ranks';
 
 MdEditor.use(Footnote);
 
@@ -27,6 +31,10 @@ export default function EditEntry({ isNew, entry, onSave }) {
   const [content, setContent] = useState(getDefaultContent(isNew, entry));
   const [image, setImage] = useState(getDefaultImage(isNew, entry));
   const [imagePath, setImagePath] = useState(getDefaultImage(isNew, entry));
+  const [statistics, setStatistics] = useState(
+    getDefaultStatistics(isNew, entry)
+  );
+  const [ranks, setRanks] = useState(getDefaultRanks(isNew, entry));
   const [isRequestInProgress, setIsRequestInProgress] = useState(false);
 
   const save = async () => {
@@ -43,7 +51,15 @@ export default function EditEntry({ isNew, entry, onSave }) {
         setTitle('');
       } else {
         setIsRequestInProgress(true);
-        await editEntry(entry, title, content, image, imagePath);
+        await editEntry(
+          entry,
+          title,
+          content,
+          image,
+          imagePath,
+          statistics,
+          ranks
+        );
         onSave(MESSAGES.success);
         router.push(`/entry?id=${entry.id}`);
       }
@@ -93,6 +109,11 @@ export default function EditEntry({ isNew, entry, onSave }) {
               }
             />
           </label>
+          <EditStatistics
+            entryStatistics={statistics}
+            changeStatistics={setStatistics}
+          />
+          <EditRanks entryRanks={ranks} changeRanks={setRanks} />
           <ButtonLoader
             text="שמירה"
             onClick={save}

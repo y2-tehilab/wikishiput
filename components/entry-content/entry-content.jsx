@@ -9,15 +9,19 @@ import { useEffect } from 'react';
 
 export default function EntryContent({ content }) {
   useEffect(() => {
-    if (
-      !document.querySelector('strong.toc-title') &&
-      document.querySelector('ol.toc-level')?.children?.length
-    ) {
-      const strong = document.createElement('strong');
-      strong.className = 'toc-title';
-      strong.innerText = 'תוכן עניינים';
-      document.querySelector('nav.toc')?.prepend(strong);
+    if (!document.querySelector('ol.toc-level')?.children?.length) {
+      document.querySelector('nav.toc').style.display = 'none';
+    } else {
+      document.querySelector('nav.toc').style.display = 'inline-block';
+
+      if (!document.querySelector('strong.toc-title')) {
+        const strong = document.createElement('strong');
+        strong.className = 'toc-title';
+        strong.innerText = 'תוכן עניינים';
+        document.querySelector('nav.toc')?.prepend(strong);
+      }
     }
+
     if (document.querySelector('h2#footnote-label')) {
       const olItems = document.querySelector('ol.toc-level');
       document.querySelector('h2#footnote-label').remove();
