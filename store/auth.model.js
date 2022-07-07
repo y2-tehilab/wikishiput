@@ -7,6 +7,7 @@ import {
 } from '../services/api/';
 import Cookies from 'js-cookie';
 import { action, makeAutoObservable, observable } from 'mobx';
+import { v4 as uuid } from 'uuid';
 
 export class AuthModel {
   user;
@@ -36,8 +37,16 @@ export class AuthModel {
     );
   }
 
+  setSessionId() {
+    const sessionId = Cookies.get('session-id');
+    if (!sessionId) {
+      Cookies.set('session-id', uuid());
+    }
+  }
+
   async getUserData() {
     try {
+      this.setSessionId();
       const token = Cookies.get('token');
       setAuthToken(token);
       const user = await getUserDetails();

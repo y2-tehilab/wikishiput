@@ -79,3 +79,9 @@ export const createRankType = async (name) => {
 
   return data;
 };
+
+export const rankEntry = async (rank) => {
+  const { data } = await entriesClient.post(`/rankEntry`, rank);
+
+  return data;
+};

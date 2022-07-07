@@ -15,7 +15,8 @@ import { observer } from 'mobx-react-lite';
 import PageLoader from '../../components/page-loader/page-loader';
 import EntryContent from '../../components/entry-content/entry-content';
 import Link from 'next/link';
-import EntryDetails from '../../components/entry-details/entry-details';
+import EntryStatistics from '../../components/entry-statistics/entry-statistics';
+import EntryRanks from '../../components/entry-ranks/entry-ranks';
 
 export default observer(function Entry() {
   const [entry, setEntry] = useState(null);
@@ -30,12 +31,7 @@ export default observer(function Entry() {
       const entryByQuery = await getEntry(router.query.id);
       setEntry(entryByQuery);
       const rankTypesResponse = await getRankTypes();
-      setRankTypes(
-        rankTypesResponse.reduce((ranks, rank) => {
-          ranks[rank.id] = rank.name;
-          return ranks;
-        }, {})
-      );
+      setRankTypes(rankTypesResponse);
       const statisticTypesResponse = await getStatisticTypes();
       setStatisticTypes(
         statisticTypesResponse.reduce((statistics, statistic) => {
@@ -95,21 +91,18 @@ export default observer(function Entry() {
                   />
                 </div>
                 {!!entry?.entryStatistics?.length && (
-                  <EntryDetails
-                    details={entry.entryStatistics}
+                  <EntryStatistics
+                    statistics={entry.entryStatistics}
                     title="סטטיסטיקות"
-                    detailsTypes={statisticTypes}
-                    datailName="statisticType"
+                    statisticsTypes={statisticTypes}
                   />
                 )}
-                {!!entry?.entryRanks?.length && (
-                  <EntryDetails
-                    details={entry.entryRanks}
-                    title="ציונים"
-                    detailsTypes={rankTypes}
-                    datailName="rankType"
-                  />
-                )}
+                <EntryRanks
+                  entryId={entry.id}
+                  ranks={entry.entryRanks}
+                  title="ציונים"
+                  ranksTypes={rankTypes}
+                />
               </div>
 
               <EntryContent content={entry.entrySections?.[0]?.content} />

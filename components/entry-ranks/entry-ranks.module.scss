@@ -1,15 +1,16 @@
-.entryDetails {
+.entryRanks {
   margin-top: 15px;
   border: 1px solid #c8ccd1;
   padding: 10px;
+  background-color: $white;
 
-  .detailsTitle {
+  .ranksTitle {
     font-size: 16px;
     margin-bottom: 5px;
     display: block;
   }
 
-  .detailsList {
+  .ranksList {
     margin: 0;
 
     dt {
@@ -24,5 +25,24 @@
       display: inline-block;
       width: 50%;
     }
+  }
+
+  .starsTitle {
+    display: block;
+    margin-top: 20px;
+  }
+
+  .rankStarsBox {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+
+    .rankStarsText {
+      width: 50%;
+    }
+  }
+
+  .rankButton {
+    margin-top: 10px;
   }
 }
