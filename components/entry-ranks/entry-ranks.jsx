@@ -5,10 +5,21 @@ import ReactStars from 'react-stars';
 import { rankEntry } from '../../services/api';
 import styles from './entry-ranks.module.scss';
 
-export default function EntryRanks({ entryId, ranks, title, ranksTypes }) {
+export default function EntryRanks({
+  entryId,
+  ranks,
+  title,
+  ranksTypes,
+  onSave,
+}) {
   const sessionId = Cookies.get('session-id');
   const ranksStars = [];
   const [entryRanks, setEntryRanks] = useState([]);
+
+  const messages = {
+    successRank: 'הערך דורג בהצלחה',
+    failed: 'שגיאה בדרוג הערך',
+  };
 
   useEffect(() => {
     setEntryRanks(
@@ -29,6 +40,7 @@ export default function EntryRanks({ entryId, ranks, title, ranksTypes }) {
       }, {})
     );
   }, [ranksTypes]);
+
   const ratingChanged = (rankType, value) => {
     const rankStarsIndex = ranksStars.findIndex(
       (rank) => rank.rankType === rankType
@@ -44,7 +56,13 @@ export default function EntryRanks({ entryId, ranks, title, ranksTypes }) {
   };
 
   const rankStarsEntry = () => {
-    ranksStars.forEach((rankStar) => rankEntry(rankStar));
+    try {
+      ranksStars.forEach((rankStar) => rankEntry(rankStar));
+      onSave(messages.successRank);
+    } catch (error) {
+      console.log(error);
+      onSave(messages.failed);
+    }
   };
 
   return (

@@ -17,6 +17,7 @@ import EntryContent from '../../components/entry-content/entry-content';
 import Link from 'next/link';
 import EntryStatistics from '../../components/entry-statistics/entry-statistics';
 import EntryRanks from '../../components/entry-ranks/entry-ranks';
+import NotificationPopup from '../../components/notification-popup/notification-popup';
 
 export default observer(function Entry() {
   const [entry, setEntry] = useState(null);
@@ -25,6 +26,23 @@ export default observer(function Entry() {
   const { isLoggedIn } = store.auth;
   const [rankTypes, setRankTypes] = useState([]);
   const [statisticTypes, setStatisticTypes] = useState([]);
+  const [isSuccessMessageVisible, setIsSuccessMessageVisible] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('');
+  let timeOut = null;
+
+  const setMessage = (message) => {
+    setNotificationMessage(message);
+    setIsSuccessMessageVisible(true);
+  };
+
+  useEffect(() => {
+    if (isSuccessMessageVisible) {
+      const ms = 3000;
+      timeOut = setTimeout(() => {
+        setIsSuccessMessageVisible(false);
+      }, ms);
+    } else clearTimeout(timeOut);
+  }, [isSuccessMessageVisible]);
 
   useEffect(() => {
     const initEntry = async () => {
@@ -102,6 +120,7 @@ export default observer(function Entry() {
                   ranks={entry.entryRanks}
                   title="ציונים"
                   ranksTypes={rankTypes}
+                  onSave={setMessage}
                 />
               </div>
 
@@ -111,6 +130,9 @@ export default observer(function Entry() {
           </div>
         )}
       </div>
+      <NotificationPopup isVisible={isSuccessMessageVisible}>
+        {notificationMessage}
+      </NotificationPopup>
     </div>
   );
 });

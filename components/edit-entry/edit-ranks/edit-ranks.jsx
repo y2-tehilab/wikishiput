@@ -17,7 +17,7 @@ export default function EditRanks() {
 
   const addRankType = async () => {
     const rankType = await createRankType(newRankType);
-    setRankTypes([...rankTypes, rankType]);
+    setRankTypes([rankTypes, rankType.name].join(', '));
     setNewRankType('');
   };
 

@@ -45,7 +45,7 @@ export default function EditStatistics({ entryStatistics, changeStatistics }) {
   };
 
   const addStatistic = () => {
-    setStatistics([...statistics, DEFAULT_STATISTIC]);
+    setStatistics([...statistics, { ...DEFAULT_STATISTIC }]);
   };
 
   return (
